@@ -1,20 +1,25 @@
 #!/usr/bin/env python
 import rospy
 from RC.msg import pwmout
+from sensor_msgs.msg import Joy
 
-def talker():
-	pub = rospy.Publisher('pwmout', pwmout)
-	rospy.init_node('drive', anonymous=True)
-	r = rospy.Rate(10)
+def callback(data):
 	msg = pwmout()
-	msg.steer = -1
-	msg.throttle = -0.5
+	msg.steer = data.axes[3]
+	msg.throttle = data.axes[1]
+	print str(msg.steer) + " " + str(msg.throttle)
+	pub.publish(msg)
 
-	while not rospy.is_shutdown():
-		pub.publish(msg)
-		r.sleep()
+def main():
+	global pub
+	pub = rospy.Publisher('pwmout', pwmout)
+
+	rospy.init_node('drive', anonymous=True)
+
+	rospy.Subscriber("joy", Joy, callback)
+	rospy.spin()
 
 if __name__ == '__main__':
 	try:
-		talker()
+		main()
 	except rospy.ROSInterruptException: pass
