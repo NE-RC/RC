@@ -5,14 +5,14 @@ from sensor_msgs.msg import Joy
 
 def callback(data):
 	msg = pwmout()
-	msg.steer = data.axes[3]
+	msg.steer = data.axes[2] * -1
 	msg.throttle = data.axes[1]
 	print str(msg.steer) + " " + str(msg.throttle)
 	pub.publish(msg)
 
 def main():
 	global pub
-	pub = rospy.Publisher('pwmout', pwmout)
+	pub = rospy.Publisher('pwmout', pwmout, queue_size=10)
 
 	rospy.init_node('drive', anonymous=True)
 
