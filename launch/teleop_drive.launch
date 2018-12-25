@@ -1,4 +1,7 @@
 <launch>
-	<node name="teleop_drive" pkg="RC" type="drive.py" />
+	<node name="teleop_drive" pkg="RC" type="drive.py">
+		<param name="static_throttle" value="0.13" />
+		<param name="max_throttle" value="0.18" />
+	</node>
 	<node name="joy_node" pkg="joy" type="joy_node" />
 </launch>
