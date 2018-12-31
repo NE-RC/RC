@@ -1,0 +1,7 @@
+<launch>
+        <node name="record_node" pkg="RC" type="record.py">
+                <param name="storage_path" value="/media/nvidia/F867-A38E" />
+		<param name="display_feed" value="False" />
+        </node>
+</launch>
+                          

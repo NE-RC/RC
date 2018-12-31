@@ -1,7 +1,10 @@
 <launch>
 	<node name="teleop_drive" pkg="RC" type="drive.py">
-		<param name="static_throttle" value="0.13" />
-		<param name="max_throttle" value="0.18" />
+		<param name="static_throttle" value="0.23" />
+		<param name="max_throttle" value="0.3" />
+		<param name="min_throttle" value="0.1" />
 	</node>
-	<node name="joy_node" pkg="joy" type="joy_node" />
+	<node name="serial_node" pkg="rosserial_arduino" type="serial_node.py">
+		<param name="port" value="/dev/ttyArduino" />
+	</node>
 </launch>
