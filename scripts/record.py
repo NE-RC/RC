@@ -18,7 +18,7 @@ def callback_pwm(data):
 #record steering value and 
 def callback_joy(data):
 	global i
-	if data.axes[4] < 0:
+	if data.axes[5] < 0:
 		img_path = os.path.join(frame_dir, str(i) + '.png')
 		label_path = os.path.join(label_dir, str(i) + '.txt')
 		f = open(label_path, 'w')
@@ -63,10 +63,10 @@ def main():
 
 		while not rospy.is_shutdown():
 			ret, frame = cap.read()
-			frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+			#frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		
 			try:
-				image_pub.publish(bridge.cv2_to_imgmsg(frame, 'mono8'))
+				image_pub.publish(bridge.cv2_to_imgmsg(frame, 'bgr8'))
 			except CvBridgeError as e:
 				rospy.logerr(e)
 	
