@@ -1,4 +1,4 @@
-#include "../include/pid.h"
+#include "pid.h"
 
 PIDController::PIDController(double kP, double kI, double kD, double kF){
   SetGains(kP, kI, kD, kF);
