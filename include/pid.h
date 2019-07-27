@@ -1,14 +1,12 @@
 #ifndef PID
 #define PID
 
-#include <algorithm>
-
 /**
  * Simple PID + FeedForward Controller.
 **/
 class PIDController{
 
-  private:
+  protected:
     double kP, kI, kD, kF;
     double integral_error, prev_error;
     double target;

@@ -1,5 +1,7 @@
 #include "pid.h"
 
+#include <algorithm>
+
 PIDController::PIDController(double kP, double kI, double kD, double kF){
   SetGains(kP, kI, kD, kF);
   SetOutputBounds(-1.0, 1.0);
