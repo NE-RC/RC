@@ -44,8 +44,7 @@ void ROSPIDController::read_ros_params(ros::NodeHandle & nh){
 }
 
 void ROSPIDController::sensor_callback(const std_msgs::Float64 & msg){
-  //whenever we receive a sensor message, push it into the stack
-  sensor_stack.push_back(msg.data);
+  last_sensor_reading = msg.data;
 }
 
 void ROSPIDController::timer_callback(const ros::TimerEvent & event){
@@ -56,18 +55,9 @@ void ROSPIDController::timer_callback(const ros::TimerEvent & event){
     output_pub.publish(to_pub);
   }
 
-  if (sensor_stack.empty()){
-    ROS_INFO("Sensor stack empty! Will not publish new PID output.");
-    return;
-  }
-
-  //fetch most recent sensor measurement
-  double current = sensor_stack[sensor_stack.size() - 1];
-  double pid_output = Update(current);
+  double pid_output = Update(last_sensor_reading);
 
   std_msgs::Float64 to_pub;
   to_pub.data = pid_output;
   output_pub.publish(to_pub);
-
-  sensor_stack.clear();
 }
