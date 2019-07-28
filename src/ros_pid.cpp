@@ -5,6 +5,7 @@ ROSPIDController::ROSPIDController(ros::NodeHandle & nh){
 
   sensor_sub = nh.subscribe(sensor_topic, 100, &ROSPIDController::sensor_callback, this);
   output_pub = nh.advertise<std_msgs::Float64>(output_topic, 100);
+  setpoint_pub = nh.advertise<std_msgs::Float64>(setpoint_topic, 100);
   timer = nh.createTimer(ros::Duration(period), &ROSPIDController::timer_callback, this);
 
 }
@@ -41,6 +42,9 @@ void ROSPIDController::read_ros_params(ros::NodeHandle & nh){
   if (!ros::param::get("~output_topic", output_topic)){
     output_topic = "output_topic";
   }
+  if (!ros::param::get("~setpoint_topic", setpoint_topic)){
+    output_topic = "setpoint_topic";
+  }
 }
 
 void ROSPIDController::sensor_callback(const std_msgs::Float64 & msg){
@@ -48,16 +52,20 @@ void ROSPIDController::sensor_callback(const std_msgs::Float64 & msg){
 }
 
 void ROSPIDController::timer_callback(const ros::TimerEvent & event){
-  //if we don't have a target, disable the output for safety
+  //publish the current setpoint (target)
+  std_msgs::Float64 to_pub;
+  to_pub.data = target;
+  setpoint_pub.publish(to_pub);
+
+  //if we don't have a target, publish an output of 0.0
   if (!has_target){
-    std_msgs::Float64 to_pub;
     to_pub.data = 0.0;
     output_pub.publish(to_pub);
   }
-
-  double pid_output = Update(last_sensor_reading);
-
-  std_msgs::Float64 to_pub;
-  to_pub.data = pid_output;
-  output_pub.publish(to_pub);
+  //else, calculate the pid output and publish that
+  else{
+    double pid_output = Update(last_sensor_reading);
+    to_pub.data = pid_output;
+    output_pub.publish(to_pub);
+  }
 }

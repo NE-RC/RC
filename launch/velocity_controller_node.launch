@@ -1,8 +1,15 @@
 <launch>
     <node name="velocity_controller_node" pkg="RC" type="velocity_controller_node" output="screen">
-        <param name="kP" value="0.0001"/>
-        <param name="kI" value="0.000000001"/>
+        <param name="kP" value="0.001"/>
+        <param name="kI" value="0.00001"/>
         <param name="kD" value="0.01"/>
+        <param name="kF" value="0.0"/>
         <param name="sensor_topic" value="encoder_vel"/>
+        <param name="output_topic" value="pwm_throttle"/>
+        <param name="period" value="0.05"/>
+        <param name="max_output" value="1.0"/>
+        <param name="min_output" value="-1.0"/>
+        <param name="tolerance" value="0.1"/>
+        <param name="setpoint_topic" value="velocity_pid_setpoint"/>
     </node>
 </launch>
