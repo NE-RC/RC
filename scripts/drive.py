@@ -2,12 +2,34 @@
 import rospy, cv2
 from RC.msg import pwmout
 from sensor_msgs.msg import Joy
+from std_msgs.msg import Float32
+
+use_model = False
+msg = pwmout()
 
 
-def callback(data):
-	msg = pwmout()
-	msg.steer = data.axes[2] * -1
+def model_callback(data):
+	global msg, use_model
+
+	if use_model:
+		msg.steer = data.data
+		pub.publish(msg)
+
+	print str(msg.steer) + " " + str(msg.throttle)
+
+def joy_callback(data):
+	global msg, use_model
+	
+	if data.buttons[11]:
+		use_model = True
+	else:
+		use_model = False	
+
+	if not use_model:
+		msg.steer = data.axes[2] * -1
+	
 	msg.throttle = data.axes[1] * max_throttle
+	
 	if data.buttons[10]:
 		msg.throttle = static_throttle
 	if abs(msg.throttle) < min_throttle:
@@ -27,7 +49,9 @@ def main():
 
 	rospy.init_node('drive', anonymous=True)
 
-	rospy.Subscriber("joy", Joy, callback)
+	rospy.Subscriber("joy", Joy, joy_callback)
+	rospy.Subscriber("model_out", Float32, model_callback)
+
 	rospy.spin()
 
 if __name__ == '__main__':

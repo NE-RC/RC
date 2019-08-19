@@ -18,7 +18,7 @@ def callback_pwm(data):
 #record steering value and 
 def callback_joy(data):
 	global i
-	if data.axes[5] < 0:
+	if data.buttons[9]:
 		img_path = os.path.join(frame_dir, str(i) + '.png')
 		label_path = os.path.join(label_dir, str(i) + '.txt')
 		f = open(label_path, 'w')

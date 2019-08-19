@@ -4,7 +4,11 @@
 		<param name="max_throttle" value="0.5" />
 		<param name="min_throttle" value="0.1" />
 	</node>
+	<node name="encoder" pkg="RC" type="encoder">
+	</node>
 	<node name="serial_node" pkg="rosserial_arduino" type="serial_node.py">
 		<param name="port" value="/dev/ttyArduino" />
+	</node>
+	<node name="joy_node" pkg="joy" type="joy_node">
 	</node>
 </launch>

@@ -27,7 +27,7 @@ def main():
 		if os.path.isfile(filename):
 
 			image = cv2.imread(filename)
-			#cv2.imshow('image', image)
+			cv2.imshow('image', image)
 			resized = cv2.resize(image, new_size)
 
 			msg.steer = model.predict(np.array([resized]) / 255.0)
