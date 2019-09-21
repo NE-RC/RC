@@ -10,8 +10,9 @@ class ROSPIDController : public PIDController {
 
   private:
     ros::Subscriber sensor_sub;
+    ros::Subscriber setpoint_sub;
+
     ros::Publisher output_pub;
-    ros::Publisher setpoint_pub;
     //Use a timer to make the publisher publish at a fixed rate.
     ros::Timer timer;
 
@@ -21,6 +22,7 @@ class ROSPIDController : public PIDController {
     double last_sensor_reading;
 
     void read_ros_params(ros::NodeHandle & nh);
+    void setpoint_callback(const std_msgs::Float64 & msg);
     void sensor_callback(const std_msgs::Float64 & msg);
     void timer_callback(const ros::TimerEvent & event);
 

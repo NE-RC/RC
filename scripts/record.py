@@ -8,12 +8,14 @@ from cv_bridge import CvBridge, CvBridgeError
 
 storage_path, frame_dir, label_dir = '','',''
 frame = None
-steer_val, i = 0, 0
+steer_val, throttle_val, i = 0, 0, 0
 
 #update steering values when changed
 def callback_pwm(data):
 	global steer_val
 	steer_val = data.steer
+	global throttle_val
+	throttle_val = data.throttle
 
 #record steering value and 
 def callback_joy(data):
@@ -24,7 +26,8 @@ def callback_joy(data):
 		f = open(label_path, 'w')
 
 		cv2.imwrite(img_path, frame)
-		f.write(str(steer_val))
+		f.write(str(steer_val) + "\n")
+		f.write(str(throttle_val))
 		f.close()
 		i+=1
 

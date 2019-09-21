@@ -11,6 +11,7 @@ ros::Publisher encoder_pub;
 
 double prev_val = -1.0;
 std::chrono::time_point<std::chrono::system_clock> prev_time, curr_time;
+double ticks_per_rotation = 4096.0 * 2.0 / 3.0;
 
 void callback(const std_msgs::Float32 & msg) {
 	if (prev_val == -1.0) {
@@ -23,18 +24,11 @@ void callback(const std_msgs::Float32 & msg) {
 		double dVal = msg.data - prev_val;
 		double dt = elapsed.count();
 
-		std::cout << "dt:" << dt << "\n";
-		std::cout << "dV:" << dVal << "\n";
-		
-		//std::cout << "curr_time:" << curr_time << "\n";
-		//std::cout << "prev_time:" << prev_time << "\n";
-
-
 		prev_val = msg.data;
 		prev_time = curr_time;
 		
 		std_msgs::Float64 enc_vel;
-		enc_vel.data = dVal / dt;
+		enc_vel.data = dVal / ticks_per_rotation / dt;
 		encoder_pub.publish(enc_vel);
 	}
 }

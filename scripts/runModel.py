@@ -11,7 +11,8 @@ config.gpu_options.allow_growth = True
 session = tf.Session(config = config)
 
 def main():
-	model_path = '/home/nvidia/catkin_ws/src/RC/scripts/NickModel_tf-11.0.h5'
+	model_path = '/home/nvidia/catkin_ws/src/RC/scripts/model_cl_081919.h5'
+	#model_path = '/home/nvidia/catkin_ws/src/RC/scripts/model_cl_092119.h5'
 	new_size = (180, 135)
 
 	model = keras.models.load_model(model_path)

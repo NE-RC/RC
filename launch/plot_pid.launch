@@ -1,6 +1,6 @@
 <launch>
     <node name="pid_plotter" pkg="RC" type="plot_pid.py" output="screen">
         <param name="pid_setpoint_topic" value="/velocity_pid_setpoint" />
-        <param name="pid_sensor_topic" value="/encoder_vel" />
+        <param name="pid_sensor_topic" value="/jetson_encoder" />
     </node>
 </launch>

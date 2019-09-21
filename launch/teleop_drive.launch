@@ -1,6 +1,6 @@
 <launch>
 	<node name="teleop_drive" pkg="RC" type="drive.py">
-		<param name="static_throttle" value="0.14" />
+		<param name="static_throttle" value="0.22" />
 		<param name="max_throttle" value="0.5" />
 		<param name="min_throttle" value="0.1" />
 	</node>

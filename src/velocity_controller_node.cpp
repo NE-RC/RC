@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
   ROSPIDController pid_controller(node);
 
   //set an arbitrary target (for now)
-  pid_controller.SetTarget(10.0);
+  //pid_controller.SetTarget(1.0);
 
   ros::spin();
 
