@@ -5,4 +5,5 @@ Welcome to NERC, a project focused on outfitting a 1/10th scale RC car with the 
 You can follow our [blog](https://nerc18.wordpress.com/) to stay updated on our progress.
 
 Here's a GIF of the car steering in a track autonomously!
+
 ![Self-Driving GIF](https://media.giphy.com/media/h2T8KEapfywlSWCski/giphy-downsized-large.gif)
